@@ -1,4 +1,5 @@
 Bukyokudb::Application.routes.draw do
+  root to: 'courses#home'
   resources :courses, :only => [:show, :index]
 
   # The priority is based upon order of creation:

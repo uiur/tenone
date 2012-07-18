@@ -1,0 +1,60 @@
+<h1>京大神科目サーチ</h1>
+<p><%= link_to '各授業の平均学生在籍数', 'http://bukyokudb.iimc.kyoto-u.ac.jp/view/10-1' %>にある授業を単位取得率の高い順に表示します。何かあれば<%= link_to '@uiureo', 'https://twitter.com/uiureo' %>まで </p>
+
+<a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja">ツイート</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+<p>
+<%= link_to '鬼科目（履修者100人以上）', courses_path(enrollment: 100, reversed: true) %>
+<%= link_to '一般教養神科目（履修者100人以上）', courses_path(faculty: '高等教育研究開発推進機構', enrollment: 100) %>
+<%= link_to '一般教養鬼科目（履修者100人以上）', courses_path(faculty: '高等教育研究開発推進機構', enrollment: 100) %>
+<%= link_to '英語神科目', courses_path(name: '英語') %>
+</p>
+
+<hr />
+
+<%= form_tag courses_path, :method => :get do %>
+  <%= label_tag 'teacher', '教員名' %>
+  <%= text_field_tag 'teacher', params[:teacher] %>
+
+  <%= label_tag 'name', '授業名' %>
+  <%= text_field_tag 'name', params[:name] %>
+
+  <%= label_tag 'faculty', '開講部局' %>
+  <%= text_field_tag 'faculty', params[:faculty] %>
+
+  <%= label_tag 'enrollment', '登録者数以上' %>
+  <%= number_field_tag 'enrollment', params[:enrollment] || 0, min: 0 %>
+
+  <%= label_tag 'reversed', '鬼科目順にする' %>
+  <%= check_box_tag 'reversed', true, params[:reversed] %>
+
+  <%= submit_tag '検索', name: nil %>
+<% end %>
+
+<table>
+  <tr>
+    <th>教員名</th>
+    <th>開講部局</th>
+    <th>授業科目名</th>
+    <th>履修登録者数</th>
+    <th>単位取得者数</th>
+    <th>単位取得率</th>
+    <th></th>
+  </tr>
+
+<% @courses.each do |course| %>
+  <tr>
+    <td><%= course.teacher %></td>
+    <td><%= course.faculty %></td>
+    <td><%= course.name %></td>
+    <td><%= course.enrollment %></td>
+    <td><%= course.pass %></td>
+    <td><%= course.percentage %></td>
+    <td><%= link_to '表示', course %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= paginate @courses %>
+

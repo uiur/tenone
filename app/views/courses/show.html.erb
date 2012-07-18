@@ -1,0 +1,40 @@
+<%= content_for(:title){ "#{@course.name} (#{@course.teacher})" } %>
+
+<p>
+  <b>教師名:</b>
+  <%= @course.teacher %>
+</p>
+
+<p>
+  <b>開講部局:</b>
+  <%= @course.faculty %>
+</p>
+
+<p>
+  <b>授業科目名:</b>
+  <%= @course.name %>
+</p>
+
+<p>
+  <b>履修登録者数:</b>
+  <%= @course.enrollment %>
+</p>
+
+<p>
+  <b>単位取得者数:</b>
+  <%= @course.pass %>
+</p>
+
+<p>
+  <b>単位取得率:</b>
+  <h2><%= "#{(@course.percentage * 100).to_i}%" %></h2>
+</p>
+
+<%= link_to '戻る', courses_path %>
+
+<br/>
+<br/>
+
+<a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja">ツイート</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
